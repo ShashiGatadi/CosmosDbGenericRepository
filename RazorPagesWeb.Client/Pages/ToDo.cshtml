@@ -1,0 +1,42 @@
+﻿@page
+@model RazorPagesWeb.Client.Pages.ToDoModel
+@{
+    ViewData["Title"] = "ToDo";
+}
+
+<h2>ToDo List</h2>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Description</th>
+            <th scope="col">Complted</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.ToDoItems?.Count > 0)
+        {
+            @foreach (var item in Model.ToDoItems)
+            {
+                <tr>
+                    <th scope="row">@item.Description</th>
+                    <td>@item.Completed</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+<hr />
+<h2>Add new to-do</h2>
+@Html.Partial("_StatusMessage", Model.StatusMessage)
+<form method="post">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="ToDoItem.Description"></label>
+        <input asp-for="ToDoItem.Description" class="form-control" placeholder="Todo description" autofocus tabindex="0" />
+        <span asp-validation-for="ToDoItem.Description" class="text-danger"></span>
+    </div>
+    <div class="form-group pt-3">
+        <button type="submit" class="btn btn-danger btn-lg">Create todo item</button>
+    </div>
+</form>
