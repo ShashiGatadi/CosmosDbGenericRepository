@@ -3,6 +3,7 @@ using Microsoft.Azure.Documents;
 using Microsoft.Azure.Documents.Client;
 using Microsoft.Azure.Documents.Linq;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -15,12 +16,12 @@ namespace DataLayer.CosmosDB
 {
     public class CosmosDbRepository<T> : IRepository<T> where T : class
     {
-        private CosmosDbSettings _settings;
+        private readonly CosmosDbSettings _settings;
         private DocumentClient _client;
 
-        public CosmosDbRepository(IConfiguration configuration)
+        public CosmosDbRepository(IOptions<CosmosDbSettings> settings)
         {
-            this._settings = new CosmosDbSettings(configuration);
+            this._settings = settings.Value ?? throw new ArgumentNullException("CosmosDbSettings");
             Init();
         }
 

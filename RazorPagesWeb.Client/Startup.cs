@@ -26,6 +26,7 @@ namespace RazorPagesWeb.Client
         {
             services.AddMvc();
 
+            services.Configure<CosmosDbSettings>(Configuration.GetSection("CosmosDb"));
             services.AddSingleton(typeof(IRepository<>), typeof(CosmosDbRepository<>));
             services.AddSingleton<IToDoService, ToDoService>();
         }
